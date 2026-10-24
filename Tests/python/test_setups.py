@@ -206,3 +206,15 @@ def test_no_lookahead_engine_truncation():
             if a["place_time"] > T:
                 a["place_bar"], a["place_time"] = -1, -1
         assert fa == pa
+
+
+def test_user_rule_ob_not_adjacent_to_fvg_rejected():
+    """Scenario bar 7 (the OB) turned bullish: the FVG at m=8 is no longer created by a bearish
+    candle; with the user rule (ObMaxDistBars=0) no OB qualifies -> REJECT_NO_OB."""
+    e, h1, h4 = scenario()
+    k = PREFIX + 7
+    e.o[k], e.c[k] = 99.4, 100.3          # same range, now bullish
+    eng = SetupEngine(BASE, e, h1, h4, lambda t: SPREAD, tick=0.01)
+    eng.run()
+    assert [s.reason for s in eng.setups] == ["REJECT_NO_OB"]
+    assert BASE.ob_max_dist_bars == 0

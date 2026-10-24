@@ -6,7 +6,7 @@
 //| the validation checklist (Docs/LIVE_CHECKLIST.md) is complete.    |
 //+------------------------------------------------------------------+
 #property copyright "Sensitor AI"
-#property version   "0.100"
+#property version   "0.200"
 #property description "Sensitor AI - automated structure/OTE/OB/FVG strategy (validation build)"
 #property strict
 
@@ -50,7 +50,7 @@ input double               InpMinImpulseATR      = 0.0;             // Min impul
 input double               InpOteMin             = 0.62;            // OTE min retracement [U]
 input double               InpOteMax             = 0.79;            // OTE max retracement [U]
 input double               InpFvgMinATR          = 0.0;             // Min FVG size (x ATR) [H]
-input int                  InpObMaxDistBars      = 5;               // OB max bars before FVG [C]
+input int                  InpObMaxDistBars      = 0;               // OB bars before the FVG (0 = OB creates the FVG) [U]
 input int                  InpObPreOriginBars    = 2;               // OB bars allowed before origin [C]
 input ENUM_SAI_OB_ZONE     InpObZoneMode         = OB_ZONE_WICK;    // OB zone: wick or body [H]
 input double               InpEntryDepth         = 0.5;             // Entry depth in OB/OTE zone (0=proximal,1=distal) [C]

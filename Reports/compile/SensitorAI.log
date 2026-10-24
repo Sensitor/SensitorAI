@@ -15,7 +15,7 @@ MQL5\Experts\SensitorAI\SensitorAI.mq5 : information: including C:\Program Files
 C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\PositionManager.mqh : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\StateStore.mqh
 MQL5\Experts\SensitorAI\SensitorAI.mq5 : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\NewsFilter.mqh
 MQL5\Experts\SensitorAI\SensitorAI.mq5 : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\Dashboard.mqh
-MQL5\Experts\SensitorAI\SensitorAI.mq5(9,11) : warning 68: version '0.100' is incompatible with MQL5 Market, must be xxx.yyy
+MQL5\Experts\SensitorAI\SensitorAI.mq5(9,11) : warning 68: version '0.200' is incompatible with MQL5 Market, must be xxx.yyy
  : information: generating code
  : information: generating code 3%
  : information: generating code 6%
@@ -51,4 +51,4 @@ MQL5\Experts\SensitorAI\SensitorAI.mq5(9,11) : warning 68: version '0.100' is in
  : information: generating code 95%
  : information: generating code 100%
  : information: code generated
-Result: 0 errors, 1 warnings, 4669 ms elapsed, cpu='X64 Regular'
+Result: 0 errors, 1 warnings, 3300 ms elapsed, cpu='X64 Regular'

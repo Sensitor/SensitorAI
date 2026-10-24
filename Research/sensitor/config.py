@@ -50,7 +50,7 @@ class StrategyConfig:
     ote_min: float = 0.62                   # [U]
     ote_max: float = 0.79                   # [U]
     fvg_min_atr: float = 0.0                # [H]
-    ob_max_dist_bars: int = 5               # [C]
+    ob_max_dist_bars: int = 0               # [U] the OB is the 1st candle of the FVG (it creates the gap)
     ob_pre_origin_bars: int = 2             # [C]
     ob_zone_mode: str = "WICK"              # [H]
     entry_depth: float = 0.5                # [U configurable] value [C]

@@ -9,3 +9,4 @@ __pycache__/
 *.ex5
 *.ex4
 MQL5/**/*.log
+dist/

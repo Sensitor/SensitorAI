@@ -171,7 +171,10 @@ fin d'impulsion (`argmax` de `Hi`). Les FVG sont examinés **chronologiquement**
 ### 6.2 Order Block (achat ; vente symétrique)
 Pour un FVG candidat d'index `m`, l'**OB est la dernière bougie baissière** (`C < O`) d'index
 `j ∈ [max(o − ObPreOriginBars, m − 1 − ObMaxDistBars) ; m − 1]`, recherchée en remontant depuis `m−1` [H].
-- `ObMaxDistBars` défaut 5, `ObPreOriginBars` défaut 2 [C].
+- `ObMaxDistBars` = **0** [U, confirmé le 2026-10-24] : l'OB doit **créer le FVG immédiatement** — la bougie OB
+  est la première des trois bougies du FVG (OB, bougie d'impulsion, bougie suivante ; gap entre l'extrême de
+  l'OB et la 3ᵉ bougie). `ObPreOriginBars` défaut 2 [C] (sans effet quand `ObMaxDistBars = 0`).
+- BOS par clôture du corps et OTE 62–79 % : confirmés par l'utilisateur le 2026-10-24.
 - Zone de l'OB — paramètre `ObZoneMode` [H] : `WICK` (défaut, `[L ; H]` de la bougie) | `BODY`
   (`[min(O,C) ; max(O,C)]`).
 - Le **couple (OB, FVG)** retenu est le premier (dans l'ordre chronologique des FVG) pour lequel un

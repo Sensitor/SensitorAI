@@ -120,3 +120,18 @@ def test_zone_states_bearish():
     assert Z.zone_state(-1, z, h, l, c, 0, 3) == Z.FULLY_MITIGATED
     c[3] = 101.1
     assert Z.zone_state(-1, z, h, l, c, 0, 3) == Z.INVALIDATED
+
+
+def test_user_rule_ob_must_create_the_fvg():
+    """[U] 2026-10-24: the OB is the first candle of the FVG (it creates the gap immediately)."""
+    # bars: 0 bearish (candidate OB), 1 bullish, 2 bullish displacement, 3 bullish
+    o = np.array([10.5, 10.1, 10.4, 12.0])
+    c = np.array([10.1, 10.4, 12.0, 12.5])
+    h = np.array([10.6, 10.5, 12.1, 12.6])
+    l = np.array([10.0, 10.0, 10.3, 11.9])
+    # FVG with middle candle m=2: L[3]=11.9 > H[1]=10.5 ; first candle (m-1=1) is bullish -> no OB
+    assert Z.find_order_block(1, o, h, l, c, fvg_mid=2, origin=0, max_dist=0, pre_origin=2) is None
+    # the old tolerant rule (5 bars) would have accepted bar 0
+    assert Z.find_order_block(1, o, h, l, c, fvg_mid=2, origin=0, max_dist=5, pre_origin=2).index == 0
+    # FVG with middle candle m=1: L[2]=10.3 > H[0]=10.6? no -> not a FVG created by bar 0
+    assert all(z.index != 1 for z in Z.find_fvgs(1, h, l, 0, 3))

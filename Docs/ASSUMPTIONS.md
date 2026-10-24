@@ -9,7 +9,7 @@ nature de la stratégie et méritent une confirmation prioritaire.
 Marché XAU/USD ; biais H4 + H1 ; confirmation par BOS M5 ou M15 ; entrée en ordre limite dans OB ∩ OTE ;
 OTE 62–79 % ; OB + FVG + OTE + BOS + biais requis ; pas d'entrée au marché de rattrapage ; pas de durée
 maximale d'un ordre ; annulation sur invalidation structurelle ; RSI(14) 70/30 sur 5 bougies clôturées
-comme filtre d'exclusion ; risque 1 % ; refus si le lot minimal dépasse le risque ; SL structurel ;
+comme filtre d'exclusion ; **BOS par clôture du corps, OB qui crée immédiatement le FVG** (confirmés le 2026-10-24) ; risque 1 % ; refus si le lot minimal dépasse le risque ; SL structurel ;
 BE à +1R au prix réel d'entrée ; 50 % à +3R avec R initial ; quatre méthodes de runner comparées
 (A structure, B liquidité, C 5R/6R, D trailing structurel) ; pas d'augmentation du risque après pertes.
 
@@ -24,7 +24,7 @@ BE à +1R au prix réel d'entrée ; 50 % à +3R avec R initial ; quatre méthode
 | H5 | ⚠ Classification des sweeps : sweep opposé H1/H4 récent = PRUDENCE | — | Règle proposée, non fournie par l'utilisateur | E6 `SWEEP_LOG_ONLY` |
 | H6 | Origine de l'impulsion = plus bas entre le swing cassé et la barre de BOS | — | Fixe le 100 % de l'OTE | — |
 | H7 | ⚠ Fin de l'impulsion = premier swing confirmé après le BOS | `SWING_CONFIRM` | Le setup n'existe qu'après le début du retracement | E6 `BOS_BAR` |
-| H8 | OB = dernière bougie de couleur opposée avant le FVG du déplacement (≤ 5 barres avant, ≤ 2 barres avant l'origine) | WICK | Définit la zone d'entrée | `ObZoneMode=BODY`, tests |
+| H8 | OB = bougie de couleur opposée **qui crée le FVG** (1ʳᵉ bougie du FVG) — *règle confirmée par l'utilisateur le 2026-10-24* ; zone = mèches | WICK | Définit la zone d'entrée | `ObZoneMode=BODY`, tests |
 | H9 | Premier couple (FVG, OB) chronologique dont l'OB recoupe l'OTE | — | — | — |
 | H10 | Un FVG comblé par le retracement est normal ; seule une **clôture au-delà** de son bord distal le rend invalide | — | — | — |
 | H11 | ⚠ Setup abandonné si le prix a déjà touché l'entrée avant que l'ordre puisse être placé (mesuré sur le Bid) | `true` | Écarte les « seconds contacts » | `RejectIfTouched=false` |
@@ -60,3 +60,9 @@ BE à +1R au prix réel d'entrée ; 50 % à +3R avec R initial ; quatre méthode
 | C11 | Spread maximal | désactivé | Quel spread maximal acceptez-vous à l'envoi de l'ordre ? |
 | C12 | Fenêtre de liquidité méthode B | H1 | Quelles zones de liquidité visez-vous (H1, H4, plus hauts/bas du jour) ? |
 | C13 | Filtre d'annonces | désactivé | Évitez-vous certaines annonces (NFP, CPI, FOMC) ? Combien de minutes ? |
+
+## D. Questions ouvertes après le retour du 2026-10-24
+
+| # | Question |
+|---|---|
+| D1 | « Un gros gap » : faut-il une taille minimale de FVG (ex. en fraction d'ATR, ou en dollars) ? Actuellement aucune taille minimale (`FvgMinATR = 0`). |

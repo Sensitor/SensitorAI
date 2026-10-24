@@ -360,12 +360,14 @@ def stage_eval(mk: Market, period: str, report: str, title: str) -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("stage", choices=["dev", "val", "test"])
+    ap.add_argument("stage", choices=["dev", "val", "test", "cycle2"])
     ap.add_argument("--end", default="2026-10-01", help="last date of data loaded (exclusive)")
     args = ap.parse_args()
     mk = load(args.end)
     if args.stage == "dev":
         stage_dev(mk)
+    elif args.stage == "cycle2":
+        stage_cycle2(mk)
     elif args.stage == "val":
         stage_eval(mk, "VAL", "05_VALIDATION.md", "Validation hors échantillon (VAL 2023-01 → 2024-06)")
     else:
@@ -376,6 +378,59 @@ def main() -> int:
         stage_eval(mk, "TEST", "06_FINAL_TEST.md", "Test final sur données jamais utilisées (TEST 2024-07 → 2026-09)")
         marker.write_text(dt.datetime.now(dt.timezone.utc).isoformat())
     return 0
+
+
+
+# ------------------------------------------------------------------------------------------------
+def stage_cycle2(mk: Market) -> None:
+    """Cycle 2 (EXPERIMENT_PLAN.md): user-confirmed OB rule, evaluated once on every period."""
+    marker = REP / ".cycle2_done"
+    if marker.exists():
+        print("cycle 2 already executed once; refusing to re-run.")
+        return
+    cfg = StrategyConfig()            # defaults now include ob_max_dist_bars=0 [U]
+    assert cfg.ob_max_dist_bars == 0
+    eng = run_signals(cfg, mk)
+    tr = simulate(eng, mk, cfg, COSTS)
+    trs = simulate(eng, mk, cfg, STRESS)
+    st = setups_frame(eng)
+    tr.to_parquet(OUT / "trades_CYCLE2.parquet")
+    st.to_parquet(OUT / "setups_CYCLE2.parquet")
+    txt = header("Cycle 2 — règle Order Block de l'utilisateur (OB qui crée le FVG immédiatement)", mk,
+                 "- Configuration : baseline du cycle 1 + `ObMaxDistBars = 0` (seul changement)\n"
+                 "- Exécuté **une seule fois** ; données déjà vues au cycle 1 ⇒ pas une validation indépendante\n"
+                 "- Variantes cumulées évaluées : 75\n")
+    cycle1 = {"DEV": (84, -0.090, 0.87), "VAL": (43, -0.343, 0.58), "TEST": (59, -0.089, 0.82)}
+    rows, all_tabs = [], []
+    for period in ("DEV", "VAL", "TEST"):
+        c = closed(tr[(tr.period == period) & (tr.variant == BASE_RUNNER)])
+        s = summarize_r(c["r_net"].to_numpy())
+        cs = closed(trs[(trs.period == period) & (trs.variant == BASE_RUNNER)])
+        ss = summarize_r(cs["r_net"].to_numpy())
+        money = money_stats(tr[tr.period == period], cfg, BASE_RUNNER, mk, COSTS)
+        months = len(pd.period_range(PERIODS[period][0], pd.Timestamp(PERIODS[period][1]) - pd.Timedelta(days=1), freq="M"))
+        rows.append({"période": period, "trades": s["trades"], "trades/mois": s["trades"] / months,
+                     "taux réussite": s.get("win_rate"), "espérance R": s.get("expectancy_r"),
+                     "IC95 bas": s.get("ci95_low"), "IC95 haut": s.get("ci95_high"), "PF": s.get("profit_factor_r"),
+                     "R total": s.get("total_r"), "R/mois": s.get("total_r", 0) / months,
+                     "espérance stress": ss.get("expectancy_r"), "DD max %": money.get("max_dd_pct"),
+                     "net 10k$": money.get("net_profit"),
+                     "cycle 1 (n, E, PF)": "%d, %+.3f, %.2f" % cycle1[period]})
+        tab = variant_table(tr, period, "CYCLE2")
+        tab.insert(0, "period", tab.pop("period"))
+        all_tabs.append(tab)
+    txt += "## Résultat principal (runner C 5R, coûts de base)\n\n" + md(pd.DataFrame(rows))
+    fun = funnel(st[st.period == "DEV"], tr[(tr.period == "DEV") & (tr.variant == BASE_RUNNER)])
+    reasons = st[st.period == "DEV"].groupby(["status", "reason"]).size().reset_index(name="n").sort_values("n", ascending=False)
+    txt += "## Entonnoir (DEV)\n\n" + md(pd.DataFrame([fun])) + md(reasons)
+    cols = ["period", "variant", "trades", "win_rate", "expectancy_r", "ci95_low", "ci95_high", "t_stat",
+            "profit_factor_r", "total_r", "max_dd_r"]
+    txt += "## Tous les runners (information)\n\n" + md(pd.concat(all_tabs)[cols])
+    for period in ("DEV", "VAL", "TEST"):
+        txt += f"## Ventilations {period}\n\n" + breakdowns(tr, BASE_RUNNER, period)
+    (REP / "09_CYCLE2_OB_RULE.md").write_text(txt)
+    marker.write_text(dt.datetime.now(dt.timezone.utc).isoformat())
+    print(pd.DataFrame(rows).to_string())
 
 
 if __name__ == "__main__":

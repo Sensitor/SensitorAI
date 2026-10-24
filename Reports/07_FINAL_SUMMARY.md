@@ -101,3 +101,18 @@ validation hors échantillon, et négative également sur le test final jamais u
    utilisée) pour éviter le surapprentissage.
 4. Si un avantage apparaît un jour, revalider sur les **ticks réels du broker** dans le Strategy Tester
    avant toute démo à visée de performance, puis seulement envisager la phase IA.
+
+## 8. Mise à jour v0.2.0 — règle Order Block de l'utilisateur (cycle 2)
+
+Retour de l'utilisateur : BOS par clôture du corps et OTE confirmés ; l'OB doit **créer le FVG
+immédiatement** (`ObMaxDistBars = 0`). Évaluation unique pré-enregistrée (`Reports/09_CYCLE2_OB_RULE.md`) :
+
+| Période | Trades | Trades/mois | Espérance | IC 95 % | PF | R total |
+|---|---|---|---|---|---|---|
+| DEV 2019-2022 | 34 | 0,7 | +0,32 R | [−0,31 ; +1,01] | 1,55 | +10,8 R |
+| VAL 2023 → 2024-06 | 16 | 0,9 | −0,72 R | [−1,11 ; −0,02] | 0,26 | −11,5 R |
+| TEST 2024-07 → 2026-09 | 22 | 0,8 | +0,00 R | [−0,45 ; +0,55] | 1,01 | +0,1 R |
+
+La règle rend les setups plus sélectifs (moins de 1 trade par mois) ; le résultat cumulé sur 2019-2026 est
+proche de zéro (≈ −0,6 R) et aucune période n'est statistiquement significative. Ces données ayant déjà
+été vues, ce n'est pas une validation indépendante.

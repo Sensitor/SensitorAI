@@ -5,7 +5,7 @@
 #ifndef SENSITOR_TYPES_MQH
 #define SENSITOR_TYPES_MQH
 
-#define SAI_VERSION        "0.1.0"
+#define SAI_VERSION        "0.2.0"
 #define SAI_COMMENT_PREFIX "SAI "
 #define SAI_EPS            1e-9
 #define SAI_BULL           1

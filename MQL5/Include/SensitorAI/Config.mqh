@@ -30,7 +30,7 @@ struct SConfig
    double            min_impulse_atr;       // [H] 0
    double            ote_min, ote_max;      // [U] 0.62 / 0.79
    double            fvg_min_atr;           // [H] 0
-   int               ob_max_dist_bars;      // [C] 5
+   int               ob_max_dist_bars;      // [U] 0 = the OB is the first candle of the FVG
    int               ob_pre_origin_bars;    // [C] 2
    ENUM_SAI_OB_ZONE  ob_zone_mode;          // [H] WICK
    double            entry_depth;           // [C] 0.5
@@ -82,7 +82,7 @@ SConfig ConfigDefaults()
    c.liquidity_max_levels=30;
    c.caution_sweep_action=SWEEP_BLOCK; c.require_compatible_sweep=false; c.sweep_lookback_bars=10;
    c.impulse_anchor=ANCHOR_SWING_CONFIRM; c.min_impulse_atr=0.0; c.ote_min=0.62; c.ote_max=0.79;
-   c.fvg_min_atr=0.0; c.ob_max_dist_bars=5; c.ob_pre_origin_bars=2; c.ob_zone_mode=OB_ZONE_WICK;
+   c.fvg_min_atr=0.0; c.ob_max_dist_bars=0; c.ob_pre_origin_bars=2; c.ob_zone_mode=OB_ZONE_WICK;
    c.entry_depth=0.5; c.reject_if_touched_before_placement=true;
    c.sl_anchor=SL_STRUCTURAL; c.sl_buffer_points=0.0; c.sl_buffer_atr=0.10;
    c.sl_add_spread_for_sells=true; c.min_sl_spread_mult=3.0; c.max_sl_atr=0.0;
