@@ -1,0 +1,49 @@
+
+
+MQL5\Scripts\SensitorAI\SensitorTests.mq5 : information: compiling MQL5\Scripts\SensitorAI\SensitorTests.mq5
+MQL5\Scripts\SensitorAI\SensitorTests.mq5 : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\SignalEngine.mqh
+C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\SignalEngine.mqh : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\Config.mqh
+C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\Config.mqh : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\Types.mqh
+C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\SignalEngine.mqh : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\StructureEngine.mqh
+C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\StructureEngine.mqh : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\Indicators.mqh
+C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\SignalEngine.mqh : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\Zones.mqh
+MQL5\Scripts\SensitorAI\SensitorTests.mq5 : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\RiskManager.mqh
+C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\RiskManager.mqh : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\MarketData.mqh
+MQL5\Scripts\SensitorAI\SensitorTests.mq5 : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\NewsFilter.mqh
+MQL5\Scripts\SensitorAI\SensitorTests.mq5 : information: including C:\Program Files\MetaTrader 5\MQL5\Include\SensitorAI\Tests\Fixtures.mqh
+ : information: generating code
+ : information: generating code 3%
+ : information: generating code 6%
+ : information: generating code 9%
+ : information: generating code 12%
+ : information: generating code 15%
+ : information: generating code 18%
+ : information: generating code 21%
+ : information: generating code 24%
+ : information: generating code 27%
+ : information: generating code 30%
+ : information: generating code 33%
+ : information: generating code 36%
+ : information: generating code 39%
+ : information: generating code 42%
+ : information: generating code 45%
+ : information: generating code 48%
+ : information: generating code 51%
+ : information: generating code 54%
+ : information: generating code 57%
+ : information: generating code 60%
+ : information: generating code 63%
+ : information: generating code 66%
+ : information: generating code 69%
+ : information: generating code 72%
+ : information: generating code 75%
+ : information: generating code 78%
+ : information: generating code 81%
+ : information: generating code 84%
+ : information: generating code 87%
+ : information: generating code 90%
+ : information: generating code 93%
+ : information: generating code 95%
+ : information: generating code 100%
+ : information: code generated
+Result: 0 errors, 0 warnings, 3593 ms elapsed, cpu='X64 Regular'

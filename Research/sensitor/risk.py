@@ -64,7 +64,7 @@ def break_even_sl(direction: int, entry_fill: float, current_sl: float, offset: 
                   tick: float) -> float | None:
     """New SL for break-even, or None if it would not tighten the stop (never widen risk)."""
     new = entry_fill + direction * offset
-    new = round(round(new / tick) * tick, 10)
+    new = round(math.floor(new / tick + 0.5) * tick, 10)
     if direction > 0 and new > current_sl + EPS:
         return new
     if direction < 0 and new < current_sl - EPS:

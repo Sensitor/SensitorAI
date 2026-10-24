@@ -127,7 +127,9 @@ def zone_state(direction: int, zone: Zone, h: np.ndarray, l: np.ndarray, c: np.n
 # Prices
 # --------------------------------------------------------------------------------------------
 def round_to_tick(price: float, tick: float) -> float:
-    return round(round(price / tick) * tick, 10)
+    # half-up rounding (floor(x+0.5)) to match MQL5 MathRound on positive prices; Python's
+    # round() would use banker's rounding on exact ties and break EA/reference parity.
+    return round(math.floor(price / tick + 0.5) * tick, 10)
 
 
 def floor_to_tick(price: float, tick: float) -> float:
