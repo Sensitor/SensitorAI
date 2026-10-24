@@ -138,3 +138,24 @@ test. Le R/mois **hors échantillon** concaténé est le chiffre de référence.
 
 Rapporté également, avec avertissement : la meilleure variante sur l'ensemble 2019-2026 (in-sample,
 biaisée à la hausse) et l'écart entre in-sample et walk-forward.
+
+---
+
+## Cycle 4 — familles de stratégies reconnues (enregistré avant exécution)
+
+Demande : « trouve une stratégie qui fait 15 R par mois ». Familles testées sur XAU/USD (mêmes données,
+mêmes coûts, exécution M1 Bid/Ask pessimiste, 1 position à la fois par variante) :
+
+| Famille | Règles | Grille |
+|---|---|---|
+| F1 Donchian (tendance) | cassure par clôture du plus haut/bas des N barres ; SL = k×ATR(20) ; sortie à la cassure du canal opposé N/2 | UT {H4, D1} × N {20, 55} × k {2, 3} (8) |
+| F2 ORB | range des X premières minutes après l'ouverture (Londres 08:00 heure de Londres, COMEX 08:20 heure de New York) ; ordres stop des deux côtés (OCO), SL = autre bord, TP = m×R ou clôture de session (Londres 12:00, NY 16:00 heure locale) | session {Londres, NY} × X {15, 30, 60} × TP {1R, 2R, fin de session} (18) |
+| F3 RSI(2) Connors | H1 ; achat si RSI(2) < s (vente si > 100−s) ; filtre SMA200 H1 optionnel ; sortie RSI(2) > 70 (< 30) ou 10 barres ; SL 2×ATR(14) | s {5, 10} × filtre {oui, non} × côtés {long seul, les deux} (8) |
+| F4 Pullback tendance | tendance H4 : EMA50 > EMA200 ; entrée H1 à la clôture repassant au-dessus de l'EMA20 après une clôture en dessous ; SL = plus bas des 5 dernières H1 − 0,1 ATR ; TP m×R | m {1,5 ; 2 ; 3} × côtés {long seul, les deux} (6) |
+| F5 NR7 / inside day | jour D1 NR7 ou inside ; ordres stop au plus haut/bas le lendemain, SL autre bord, TP m×R ou fin de journée | type {NR7, inside} × TP {1R, 2R, fin de journée} (6) |
+
+Total : 46 variantes. Mesure de référence : **walk-forward glissant** (3 ans d'entraînement, critère R total
+avec ≥ 20 trades et PF ≥ 1,1 ; test sur l'année suivante 2022 → 2026-09), par famille puis pour le
+**portefeuille** des familles (somme des R mensuels, chaque famille risquant 1R par trade).
+Avertissement enregistré : l'or a été en forte hausse 2019-2026 ; les résultats acheteurs/vendeurs sont
+rapportés séparément pour distinguer un avantage d'une simple exposition à la hausse.
