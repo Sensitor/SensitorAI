@@ -107,3 +107,34 @@ Protocole :
   validation indépendante ; il mesure l'effet d'une règle fournie par l'utilisateur (non choisie sur les
   données). Une validation indépendante exigera des données nouvelles (forward / démo).
 - Nombre cumulé de variantes évaluées : 70 (cycle 1) + 5 (cycle 2) = 75.
+
+---
+
+## Cycle 3 — recherche de paramètres demandée par l'utilisateur (enregistré avant exécution)
+
+Demande : « trouve le réglage le plus rentable » ; objectif exprimé : 10–15 R par mois.
+
+Espace de recherche (règles [U] conservées : BOS par clôture du corps, OTE 62–79 %, OB qui crée le FVG,
+ordre limite, RSI comme filtre d'exclusion ou absent pour comparaison) — **400 configurations tirées au
+hasard** (graine fixe 2026) parmi :
+UT d'entrée {M15, M5} ; swings d'entrée {2, 3, 5} ; swings H1/H4 {2, 3, 5} ; mode après CHoCH
+{FLIP, NEUTRAL} ; sweeps opposés {BLOCK, LOG_ONLY} ; RSI {OFF, AT_SETUP sur UT d'entrée, AT_SETUP sur H1,
+GATE sur UT d'entrée} ; profondeur d'entrée {0 ; 0,5 ; 1} ; invalidation {CLOSE, WICK} ; impulsion
+{SWING_CONFIRM, BOS_BAR} ; buffer SL {0,1 ; 0,3 ATR} ; taille minimale du FVG {0 ; 0,3 ; 0,6 ATR} ;
+« déjà touché » {rejet, accepté}.
+
+Gestion (6 variantes, toutes simulées sur les mêmes signaux) :
+M0 BE +1R, 50 % à +3R, TP 5R (**règles de l'utilisateur**) ; M1 sans BE, 50 % à +3R, TP 5R ;
+M2 BE +2R, 50 % à +3R, TP 5R ; M3 sans BE ni partielle, TP 3R ; M4 sans BE ni partielle, TP 2R ;
+M5 BE +1R, sans partielle, TP 3R. M1–M5 **dérogent** aux règles de l'utilisateur et sont signalées comme telles.
+
+Total : 2 400 variantes. Coûts de base du plan v1. R calculés par trade (sans limites de portefeuille).
+
+Mesure principale (honnête) : **walk-forward glissant** — fenêtre d'entraînement de 3 ans, test sur l'année
+suivante : 2022, 2023, 2024, 2025, 2026 (jan–sept). Sur chaque fenêtre d'entraînement on retient la
+variante maximisant le R net total sous contraintes (≥ 30 trades, PF ≥ 1,1) ; on l'applique à l'année de
+test. Le R/mois **hors échantillon** concaténé est le chiffre de référence. Variante secondaire du critère
+(rapportée aussi) : maximiser la statistique t.
+
+Rapporté également, avec avertissement : la meilleure variante sur l'ensemble 2019-2026 (in-sample,
+biaisée à la hausse) et l'écart entre in-sample et walk-forward.
