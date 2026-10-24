@@ -73,7 +73,12 @@ def load_m1(symbol: str = "XAUUSD", start: str = "2018-01-01", end: str = "2026-
     y0, y1 = int(start[:4]), int(end[:4])
     parts = []
     for y in range(y0, y1 + 1):
-        f = CACHE / f"{symbol}_M1_{y}.parquet"
+        # the cache key includes the number of raw daily files so that a partially downloaded year
+        # is never frozen: new files => new cache entry
+        nraw = sum(1 for _ in (RAW / symbol).glob(f"*/{y:04d}/*/*.bi5"))
+        if nraw == 0:
+            continue
+        f = CACHE / f"{symbol}_M1_{y}_{nraw}.parquet"
         if not f.exists():
             df = build_year(symbol, y)
             if df.empty:
