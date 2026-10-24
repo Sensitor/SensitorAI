@@ -90,7 +90,7 @@ def header(title: str, mk: Market, extra: str = "") -> str:
     t0 = pd.to_datetime(mk.m1.time[0], unit="s", utc=True)
     t1 = pd.to_datetime(mk.m1.time[-1], unit="s", utc=True)
     return (f"# {title}\n\n"
-            f"- Généré le {dt.datetime.utcnow():%Y-%m-%d %H:%M} UTC, code `{git_rev()}`\n"
+            f"- Généré le {dt.datetime.now(dt.timezone.utc):%Y-%m-%d %H:%M} UTC, code `{git_rev()}`\n"
             f"- Données : Dukascopy XAUUSD M1 Bid/Ask, {t0:%Y-%m-%d} → {t1:%Y-%m-%d} ({len(mk.m1.time):,} minutes)\n"
             f"- Coûts de base : {json.dumps(COSTS.as_dict())}\n"
             f"- Périodes : {json.dumps(PERIODS)}\n{extra}\n"
@@ -99,9 +99,9 @@ def header(title: str, mk: Market, extra: str = "") -> str:
 
 
 # ------------------------------------------------------------------------------------------------
-def load() -> Market:
+def load(end: str = "2026-10-01") -> Market:
     t = time.time()
-    mk = Market.load("2018-01-01", "2026-10-01")
+    mk = Market.load("2018-01-01", end)
     print(f"market loaded in {time.time() - t:.0f}s: {len(mk.m1.time):,} M1 bars", flush=True)
     return mk
 
@@ -361,8 +361,9 @@ def stage_eval(mk: Market, period: str, report: str, title: str) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("stage", choices=["dev", "val", "test"])
+    ap.add_argument("--end", default="2026-10-01", help="last date of data loaded (exclusive)")
     args = ap.parse_args()
-    mk = load()
+    mk = load(args.end)
     if args.stage == "dev":
         stage_dev(mk)
     elif args.stage == "val":
@@ -373,7 +374,7 @@ def main() -> int:
             print("TEST stage already executed once; refusing to re-run (see EXPERIMENT_PLAN.md).")
             return 1
         stage_eval(mk, "TEST", "06_FINAL_TEST.md", "Test final sur données jamais utilisées (TEST 2024-07 → 2026-09)")
-        marker.write_text(dt.datetime.utcnow().isoformat())
+        marker.write_text(dt.datetime.now(dt.timezone.utc).isoformat())
     return 0
 
 
