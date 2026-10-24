@@ -1,0 +1,11 @@
+# market data (re-downloadable with Research/scripts/download_dukascopy.py)
+Research/data/raw/
+Research/data/cache/
+Research/output/
+__pycache__/
+*.pyc
+.pytest_cache/
+# MetaTrader build products
+*.ex5
+*.ex4
+MQL5/**/*.log
