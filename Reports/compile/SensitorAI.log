@@ -51,4 +51,4 @@ MQL5\Experts\SensitorAI\SensitorAI.mq5(9,11) : warning 68: version '0.100' is in
  : information: generating code 95%
  : information: generating code 100%
  : information: code generated
-Result: 0 errors, 1 warnings, 5982 ms elapsed, cpu='X64 Regular'
+Result: 0 errors, 1 warnings, 4803 ms elapsed, cpu='X64 Regular'

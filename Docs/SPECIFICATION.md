@@ -192,7 +192,8 @@ le déplacement qui crée la zone n'est pas une mitigation) :
 | `INVALIDATED` | une clôture `< a` | une clôture `< a` |
 
 Condition de setup [H] : à la confirmation, l'OB n'est ni `FULLY_MITIGATED` ni `INVALIDATED` et le
-FVG n'est pas `FULLY_MITIGATED`/`INVALIDATED`. Une zone n'est jamais considérée valide indéfiniment :
+FVG n'est pas `INVALIDATED` (un FVG `FULLY_MITIGATED` est accepté : le retracement vers l'OB, situé
+au-delà du FVG, le comble normalement — décision consignée dans `Docs/CHANGELOG.md`). Une zone n'est jamais considérée valide indéfiniment :
 le setup est abandonné dès qu'une règle de la section 9 s'applique.
 Note : pour un achat l'OB est sous le FVG ; le prix doit donc traverser le FVG pour atteindre
 l'ordre. Le comblement du FVG **après** la confirmation est attendu et n'invalide pas le setup.
@@ -208,12 +209,17 @@ l'ordre. Le comblement du FVG **après** la confirmation est attendu et n'invali
   - Vente : `E = Z.a + EntryDepth × (Z.b − Z.a)`.
   - Défaut provisoire **0.5** ; les valeurs 0, 0.5 et 1 sont comparées en recherche. Le milieu
     n'est pas présumé optimal [U].
-- Arrondi : `E` est arrondi au tick le plus proche puis **borné** dans
+- Arrondi : `E` est arrondi au tick le plus proche (arrondi « demi vers le haut », identique à
+  `MathRound` MQL5) puis **borné** dans
   `[ceil_tick(Z.a) ; floor_tick(Z.b)]`. Si cet intervalle est vide ⇒ `REJECT_ZONE_TOO_NARROW`.
   **L'entrée n'est jamais hors de Z** [U].
 - Ordre **limite uniquement** ; aucune entrée au marché de rattrapage [U]. Si, au moment de placer
   l'ordre, le prix a déjà franchi `E` (achat : `Ask ≤ E`), le setup est marqué
-  `MISSED_PRICE_THROUGH` et **n'est pas exécuté** [H].
+  `MISSED_AT_PLACEMENT` et **n'est pas exécuté** [H].
+- Si le prix (Bid) a déjà touché `E` entre la fin de l'impulsion et le moment où l'ordre peut être placé
+  (attente de la confirmation du swing ou du filtre RSI), le setup est marqué
+  `MISSED_TOUCHED_BEFORE_PLACEMENT` (paramètre `RejectIfTouched`, défaut `true`) [H] : le premier
+  retour dans la zone a été manqué et un « second contact » n'est pas pris par défaut.
 
 ## 8. Stop Loss
 

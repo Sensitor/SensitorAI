@@ -128,7 +128,7 @@ public:
          if(r[i].time+psec>upto) break;           // forming bar (or future): never used
          if(s.Size()>0 && r[i].time<=s.LastTime()) continue;
          if(r[i].high<r[i].low || r[i].open<=0 || r[i].close<=0) { last_error="corrupted bar "+TimeToString(r[i].time); return -1; }
-         if(s.Append(r[i].time,r[i].open,r[i].high,r[i].low,r[i].close)) added++;
+         if(s.Append(r[i].time,r[i].open,r[i].high,r[i].low,r[i].close,r[i].spread*spec.point)) added++;
         }
       return added;
      }

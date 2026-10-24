@@ -19,24 +19,25 @@ public:
    int               tf_seconds;
    datetime          time[];     // bar OPEN time
    double            o[],h[],l[],c[];
+   double            spread[];   // historical spread of the bar (price units), 0 if unknown
    double            atr[];
    int               atr_period;
 
                      CBarSeries(void) : tf_seconds(0), atr_period(14) {}
    void              Init(const int tf_sec) { tf_seconds=tf_sec; Clear(); }
-   void              Clear(void) { ArrayResize(time,0); ArrayResize(o,0); ArrayResize(h,0); ArrayResize(l,0); ArrayResize(c,0); ArrayResize(atr,0); }
+   void              Clear(void) { ArrayResize(time,0); ArrayResize(o,0); ArrayResize(h,0); ArrayResize(l,0); ArrayResize(c,0); ArrayResize(atr,0); ArrayResize(spread,0); }
    int               Size(void) const { return ArraySize(time); }
    datetime          CloseTime(const int i) const { return time[i]+tf_seconds; }
    datetime          LastTime(void) const { int n=ArraySize(time); return n>0 ? time[n-1] : 0; }
 
    //--- append one closed bar (must be newer than the last one)
-   bool              Append(const datetime t,const double op,const double hi,const double lo,const double cl)
+   bool              Append(const datetime t,const double op,const double hi,const double lo,const double cl,const double sp=0.0)
      {
       int n=ArraySize(time);
       if(n>0 && t<=time[n-1]) return false;
-      ArrayResize(time,n+1); ArrayResize(o,n+1); ArrayResize(h,n+1); ArrayResize(l,n+1); ArrayResize(c,n+1);
-      ArrayResize(atr,n+1);
-      time[n]=t; o[n]=op; h[n]=hi; l[n]=lo; c[n]=cl;
+      ArrayResize(time,n+1,4096); ArrayResize(o,n+1,4096); ArrayResize(h,n+1,4096); ArrayResize(l,n+1,4096);
+      ArrayResize(c,n+1,4096); ArrayResize(atr,n+1,4096); ArrayResize(spread,n+1,4096);
+      time[n]=t; o[n]=op; h[n]=hi; l[n]=lo; c[n]=cl; spread[n]=sp;
       atr[n]=AtrAt(h,l,c,n,atr_period);
       return true;
      }

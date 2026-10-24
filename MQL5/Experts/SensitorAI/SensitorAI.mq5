@@ -266,7 +266,7 @@ void TryPlace(const int ti)
      }
    if(g_store.Has("sent_"+id) || g_ex.EverSent(id,g_eng.setups[idx].confirm_time))
      {
-      g_log.Info("setup "+id+" already sent once: not re-sent");
+      SetState(ti,ST_CLOSED,0,"setup already sent once: never re-sent");
       return;
      }
    SSetup s=g_eng.setups[idx];
@@ -355,7 +355,12 @@ void ProcessNewBars(const bool live)
          EnterErrorSafe("look-ahead guard: bar "+TimeToString(g_eng.entry.time[k])+" not closed");
          return;
         }
-      g_eng.ProcessEntryBar(k,g_md.Spread());
+      //--- live: spread of the current tick. Replay: historical spread of the next bar (what the
+      //--- EA saw when that bar opened; same convention as the Python reference). Using the current
+      //--- spread for old bars could reject setups that were valid and orphan their orders.
+      double sp=g_md.Spread();
+      if(!live && k+1<g_eng.entry.Size() && g_eng.entry.spread[k+1]>0) sp=g_eng.entry.spread[k+1];
+      g_eng.ProcessEntryBar(k,sp);
       HandleEngineChanges(live);
       if(live)
         {
