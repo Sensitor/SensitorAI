@@ -116,3 +116,17 @@ immédiatement** (`ObMaxDistBars = 0`). Évaluation unique pré-enregistrée (`R
 La règle rend les setups plus sélectifs (moins de 1 trade par mois) ; le résultat cumulé sur 2019-2026 est
 proche de zéro (≈ −0,6 R) et aucune période n'est statistiquement significative. Ces données ayant déjà
 été vues, ce n'est pas une validation indépendante.
+
+## 9. Cycle 3 — recherche de paramètres (2 400 variantes, walk-forward) — `Reports/10_PARAM_SEARCH.md`
+
+| Mesure | Résultat |
+|---|---|
+| Meilleure variante in-sample 2019-2026 (surévaluée) | **+0,25 R/mois** (111 trades, PF 1,28, t = 1,15 < seuil hasard 3,95) |
+| Part des variantes positives in-sample | 17 % ; médiane −0,32 R/mois |
+| Fréquence maximale atteinte | 6,3 trades/mois (à −0,30 R/trade) ; médiane 0,5 trade/mois |
+| Walk-forward hors échantillon 2022 → 2026-09 (critère R total) | **−0,38 R/mois** (85 trades, PF 0,69) |
+| Walk-forward (critère t) | −0,23 R/mois |
+| Walk-forward (gestion de l'utilisateur seulement) | −0,18 R/mois |
+
+Aucun réglage de cette famille de stratégies n'approche l'objectif de 10–15 R/mois ; la procédure
+d'optimisation elle-même perd hors échantillon. **Aucune configuration n'est recommandée pour le réel.**
