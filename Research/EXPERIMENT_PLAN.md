@@ -87,3 +87,23 @@ Démo envisageable seulement si : espérance > 0 sur VAL **et** TEST, profit fac
 positif sous le scénario de coûts « stress », drawdown compatible avec la tolérance de l'utilisateur.
 Sinon : poursuite de la recherche, pas de démo à visée de validation de rentabilité (une démo technique
 de l'EA reste utile pour valider l'exécution).
+
+---
+
+## Cycle 2 — règle Order Block confirmée par l'utilisateur (enregistré avant exécution)
+
+Retour de l'utilisateur après revue des graphiques (2026-10-24) :
+- BOS confirmé par **clôture du corps** au-delà du swing : conforme à l'implémentation ([U] confirmé).
+- OTE 62–79 % : conforme ([U] confirmé).
+- **Nouvelle règle [U]** : l'Order Block doit créer le FVG **immédiatement** — la bougie OB est la première
+  des trois bougies du FVG (OB → bougie d'impulsion → bougie suivante, gap entre l'extrême de l'OB et la
+  3ᵉ bougie). Implémentation : `ObMaxDistBars = 0`. Tous les autres paramètres sont inchangés.
+
+Protocole :
+- Une seule configuration nouvelle (baseline + `ObMaxDistBars = 0`), runner principal C 5R ; les 5 runners
+  sont rapportés à titre d'information.
+- Évaluée **une seule fois** sur DEV, VAL et TEST, résultats rapportés tels quels.
+- **Limite** : les données 2019-2026 ont déjà été vues au cycle 1. Ce cycle n'est donc pas une
+  validation indépendante ; il mesure l'effet d'une règle fournie par l'utilisateur (non choisie sur les
+  données). Une validation indépendante exigera des données nouvelles (forward / démo).
+- Nombre cumulé de variantes évaluées : 70 (cycle 1) + 5 (cycle 2) = 75.
