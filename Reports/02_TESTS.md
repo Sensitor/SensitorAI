@@ -2,7 +2,7 @@
 
 ## 1. Tests Python — `python3 -m pytest Tests/python -q`
 
-**91 tests, 91 réussis.** Les résultats attendus sont calculés à la main (commentaires dans les tests) et
+**97 tests, 97 réussis.** Les résultats attendus sont calculés à la main (commentaires dans les tests) et
 ont été écrits avant l'exécution.
 
 | Fichier | Couverture |
@@ -12,12 +12,15 @@ ont été écrits avant l'exécution.
 | `test_zones.py` | OTE achat/vente (exemples de référence 2000/2010), convention de retracement, FVG haussier/baissier, absence de FVG, taille minimale, OB (mèche/corps/fenêtre), intersection cas A/B/vide/contact, profondeur d'entrée 0/0,5/1, arrondi qui reste dans la zone, zone plus étroite qu'un tick, SL (3 ancrages, arrondi vers l'extérieur, spread des ventes), états des zones achat/vente |
 | `test_risk.py` | Volume (exemple de référence 10 000 $ / 1 % / SL 5 $), commission, jamais d'arrondi supérieur, refus du lot minimal, plafonds, entrées invalides, sécurité flottante, volumes partiels (0,20 / 0,15 / 0,03 / lot minimal), repli `KEEP_ALL`, R initial, BE jamais élargi |
 | `test_setups.py` | Scénario d'achat complet calculé à la main (BOS, impulsion, OTE, FVG, OB, cas B, entrée 100,48, SL 98,90, 1R 1,58), **miroir exact en vente**, spread du SL vente, profondeurs, invalidations (clôture au-delà, mèche vs clôture, échec profond, vente), contradiction H4/H1 ⇒ aucun setup, changement de biais ⇒ annulation, filtre RSI, ancrage `BOS_BAR`, « déjà touché avant placement », SL trop serré, **invariance par troncature du moteur complet** |
+| `test_portfolio.py` | Sizing (0,20 lot, +200 $), limite de positions, budget de risque libéré par le BE, limite de perte journalière (avec volumes arrondis vers le bas), repli `CLOSE_ALL` sur lot minimal indivisible, refus du lot minimal |
 | `test_simulator.py` | Remplissage sur l'Ask, amélioration de prix sur gap, SL avec slippage, BE puis sortie au BE, partielle + TP 5R / 6R, ambiguïté intra-bougie pessimiste, bougie d'exécution, annulation avant exécution, jamais de poursuite, vente miroir (SL déclenché par l'Ask), runner A (cassure), runner D (stop suiveur qui ne recule jamais), runner B, commission et swap (mercredi triple) en R |
 
 Incidents honnêtement consignés : lors de la première exécution, **2 tests sur 91 ont échoué à cause
 d'erreurs dans les valeurs attendues que j'avais écrites** (un scénario de vente « doublement miroir »
 et une lecture de la mauvaise bougie M1). Les attendus ont été corrigés après vérification manuelle ;
-le code testé n'a pas été modifié pour ces deux cas.
+le code testé n'a pas été modifié pour ces deux cas. De même, un attendu erroné de
+`test_portfolio.py` (trois pertes de 1R supposées atteindre la limite de 3 % alors que l'arrondi du
+volume vers le bas les limite à 2,9 %) a été corrigé.
 
 ## 2. Tests MQL5 dans le terminal MetaTrader 5 — `Tools/run_mql5_tests.sh`
 
