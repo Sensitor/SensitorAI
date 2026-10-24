@@ -130,3 +130,19 @@ proche de zéro (≈ −0,6 R) et aucune période n'est statistiquement signific
 
 Aucun réglage de cette famille de stratégies n'approche l'objectif de 10–15 R/mois ; la procédure
 d'optimisation elle-même perd hors échantillon. **Aucune configuration n'est recommandée pour le réel.**
+
+## 10. Cycle 4 — familles de stratégies reconnues — `Reports/11_STRATEGY_FAMILIES.md`
+
+| Famille (walk-forward 2022 → 2026-09) | Trades/mois | Espérance | R/mois |
+|---|---|---|---|
+| F1 Donchian (tendance H4/D1) | 1,1 | +0,17 R | **+0,18** |
+| F2 ORB Londres / New York | 0 (aucune variante admissible ; in-sample : ~21 trades/mois, toutes négatives, −0,8 à −5 R/mois) | — | 0 |
+| F3 RSI(2) Connors | 0 (aucune admissible ; in-sample : jusqu'à 64 trades/mois, toutes négatives) | — | 0 |
+| F4 Pullback tendance | 0,7 | +0,05 R | +0,04 |
+| F5 NR7 / inside day | 2,3 | +0,04 R | +0,08 |
+| **Portefeuille (toutes en même temps)** | ~4 | — | **+0,30** (1 mois sur 57 ≥ 15 R ; DD max 14,8 R) |
+
+Constat : les familles à haute fréquence (ORB, retour à la moyenne) ont le nombre de trades nécessaire mais une
+espérance négative après coûts ; les familles positives (tendance, compression) tradent peu et leur gain est en
+grande partie l'exposition à la hausse de l'or (Donchian D1 : +3,4 R à l'achat, −0,9 R à la vente).
+Aucune stratégie testée, seule ou combinée, n'approche 15 R/mois.
