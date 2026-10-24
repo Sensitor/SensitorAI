@@ -46,4 +46,4 @@ MQL5\Scripts\SensitorAI\SensitorTests.mq5 : information: including C:\Program Fi
  : information: generating code 95%
  : information: generating code 100%
  : information: code generated
-Result: 0 errors, 0 warnings, 3308 ms elapsed, cpu='X64 Regular'
+Result: 0 errors, 0 warnings, 3776 ms elapsed, cpu='X64 Regular'

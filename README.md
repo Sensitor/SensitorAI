@@ -9,6 +9,18 @@ de gestion du runner.
 > `Reports/07_FINAL_SUMMARY.md` avant toute utilisation. Démo uniquement tant que
 > `Docs/LIVE_CHECKLIST.md` n'est pas entièrement validée.
 
+## Résultats v0.1.0 (définitions provisoires, coûts inclus)
+
+| Période | Trades | Espérance nette | Profit factor |
+|---|---|---|---|
+| DEV 2019-2022 | 84 | −0,09 R | 0,87 |
+| VAL 2023-01 → 2024-06 | 43 | −0,34 R | 0,58 |
+| TEST 2024-07 → 2026-09 (une seule exécution) | 59 | −0,09 R | 0,82 |
+
+**Aucun avantage statistique démontré** ; aucune des 70 variantes testées ne se distingue du hasard ; les
+quatre méthodes de runner sont indiscernables. Détails, diagnostic et recommandations :
+`Reports/07_FINAL_SUMMARY.md`.
+
 ## Arborescence
 
 ```
